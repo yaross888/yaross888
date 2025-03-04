@@ -1,17 +1,17 @@
-name: Build EXE and Upload to FTP
+name: Build and Upload EXE to FTP
 
 on:
   push:
     branches:
-      - main  # Змінюй, якщо твоя головна гілка інша
-  workflow_dispatch:
+      - main
 
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -22,19 +22,13 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build EXE
-        run: pyinstaller --onefile --name YarossAI main.py  # Зміни "main.py" на твій файл
+        run: pyinstaller --onefile --name YarossAI main.py
 
       - name: Upload to FTP
-    uses: SamKirkland/FTP-Deploy-Action@v4
-with:
-  server: ${{ secrets.FTP_HOST }}
-  username: ${{ secrets.FTP_USER }}
-  password: ${{ secrets.FTP_PASS }}
-  local-dir: ./dist/
-  server-dir: /public_html/YarossAI  # Змінюй, якщо треба
-
-      - name: Save Artifact
-        uses: actions/upload-artifact@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          name: YarossAI
-          path: dist/YarossAI.exe
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./dist/
+          server-dir: /your/ftp/path/
