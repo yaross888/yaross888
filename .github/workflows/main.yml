@@ -25,13 +25,13 @@ jobs:
         run: pyinstaller --onefile --name YarossAI main.py  # Зміни "main.py" на твій файл
 
       - name: Upload to FTP
-        uses: sebastianpopp/ftp-action@v1
-        with:
-          host: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASS }}
-          localDir: dist
-          remoteDir: /public_html/YarossAI  # Змінюй, якщо треба
+    uses: SamKirkland/FTP-Deploy-Action@v4
+with:
+  server: ${{ secrets.FTP_HOST }}
+  username: ${{ secrets.FTP_USER }}
+  password: ${{ secrets.FTP_PASS }}
+  local-dir: ./dist/
+  server-dir: /public_html/YarossAI  # Змінюй, якщо треба
 
       - name: Save Artifact
         uses: actions/upload-artifact@v4
