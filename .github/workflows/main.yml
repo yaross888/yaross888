@@ -25,7 +25,7 @@ jobs:
         run: pyinstaller --onefile --name YarossAI main.py  # Зміни "main.py" на твій файл
 
       - name: Upload to FTP
-        uses: sebastianpopp/ftp-action@v1.2.3
+        uses: sebastianpopp/ftp-action@v1
         with:
           host: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
